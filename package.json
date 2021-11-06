@@ -8,6 +8,7 @@
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky install",
     "start": "webpack  serve",
+    "build": "webpack",
     "test": "karma start"
   },
   "keywords": [

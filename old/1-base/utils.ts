@@ -1,4 +1,3 @@
-/* eslint-disable */
 Object.defineProperty(window, 'MySweetApp', { value: 'v1.0.0', writable: true });
 
 function deliveryMethod() {
@@ -9,6 +8,7 @@ function deliveryMethod() {
 function shipWeight() {
 	// const el = document.getElementById('weight') as HTMLDivElement
 	const el = document.getElementById('weight');
+
 	if (!el) {
 		return 0;
 	}
@@ -29,17 +29,15 @@ function sendUpdates(emailAddr: string | string[]) {
 			console.log('WARNING: Oversize package');
 		}
 	}
+
 	if (Array.isArray(emailAddr)) {
-		emailAddr.forEach((val, index) => {
+		emailAddr.forEach((val, _index) => {
 			sendEmail(val.trim());
 		});
 	} else {
 		sendEmail(emailAddr.trim());
 	}
 }
-/* eslint-enable */
-
+sendUpdates('a@a');
 // /** @type{Array.<number>} */
 // let int = 1;
-
-[1, 2].includes();
