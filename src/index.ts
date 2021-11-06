@@ -1,102 +1,92 @@
-// interface IUserAccount {
-// 	firstName: string;
-// 	age: number;
-// }
-// //
-// // const user = UserAccount;
-//
-// const userAccount = {
-// 	firstName: 'Ihor',
-// 	age: 35,
-// };
-// //
-//  const user: typeof userAccount = IUserAccount;
+// T extends U ? X: Y
 
-// class Point {
-// 	public x = 1;
+// type nonUndefined<T> = T extends undefined | string ? never : T;
 //
-// 	public y = 1;
-// }
+// type snbu = string | undefined | boolean | number;
 //
-// const p: Point = new Point();
+// let v: nonUndefined<snbu> = 's'; //   boolean | number
+//
+interface IHydrantA {
+	name: string;
+	type: 'A';
+}
 
-// let int: number = 1;
-// int = NaN;
-// int = 0x0101;
-// // int = null;
-// // int = undefined;
+// let a: Exclude<any, any>;
 //
-// let str: string = 's';
-// str = `${int}`;
+interface IHydrantB {
+	name: string;
+	type: 'B';
+}
+
+interface IHydrantC {
+	name: string;
+	type: 'C';
+}
 //
-// let bool: boolean = true;
-// bool = false;
+type Hydrant = IHydrantA | IHydrantB | IHydrantC;
+
+type Arr = [() => IHydrantA, () => boolean];
+
+type FirstTupleElReturnType<T extends [...any]> = T extends [infer U, ...unknown[]]
+	? U extends (...args: unknown[]) => infer R
+		? R
+		: never
+	: never;
+
+const a: FirstTupleElReturnType<Arr[0]> = 1;
+
 //
-// let nil: null = null;
-// let und: undefined = undefined;
+// function pressure(_h: Exclude<Hydrant, IHydrantB>) {}
 //
-// let bInt: bigint = 3n;
-//
-// const key1: symbol = Symbol('key1');
-// const key2 = Symbol('key1');
-// const key3: unique symbol = Symbol('key3');
-//
-// let strictObject = {
-// 	[key1]: 100,
-// 	[key2]: 101,
-// 	[key3]: 101,
-// 	[Symbol.iterator]: {
-// 		next() {},
-// 	},
+// const h1: IHydrantC = {
+// 	name: '1231asd',
+// 	type: 'C',
 // };
 //
-// const v = strictObject[key1];
+// pressure(h1);
 
-// let int: 1 | 2 | 3 | 4 | 5 = 6;
+// type Arr = [() => IHydrantA, () => boolean, () => string];
 //
-// enum Animations {
-// 	EASE_IN = 'ease-in',
-// 	EASE_OUT = 'ease-out',
-// }
+// type FirstTupleElReturnType<T> = T extends [infer U, ...unknown[]]
+// 	? U extends (...args: unknown[]) => infer R
+// 		? R
+// 		: never
+// 	: never;
+//
+// let v: FirstTupleElReturnType<Arr> = {
+// 	name: 'sd123',
+// 	type: 'A',
+// };
+//
+// type FunctionParamsReturnType<T extends Function> = T extends (
+// 	...args: [infer U, infer Y]
+// ) => infer R
+// 	? U | Y | R
+// 	: never;
+// type OnlyNonFunction<T> = T extends Function ? never : T;
+//
+// type FunctionParamsReturnType<T extends Function> = T extends (...args: infer Args) => infer R
+// 	? OnlyNonFunction<Args[Exclude<keyof Args, 'length'>]> | R
+// 	: never;
 
-// type AnimationType = 'ease' | 'fade';
-// type AnimationDirection = 'in' | 'out';
 /*
-interface IAniamtionConfig {
-	delay: number;
-	easing: `${AnimationType}-${AnimationDirection}`;
-}
+   1) is Function
+   2) Args = [number,string, string ]
+   3) keyof Array 0,1,2 pop, push...., length(delete)
+   4) Array<keyof Array>  ()=>{}, ()=>
+   5) 0, 1,2,3.. length
+ */
 
-function animate(_options: IAniamtionConfig) {
-	if (_options.easing === 'ease-in') {
-	}
-}
-
-animate({ delay: 1000, easing: Animations.EASE_OUT });*/
-
-// let values= Object.keys(Animations)
-
-interface IFact {
-	factId: number;
-	userId: string;
-}
-
-const dataList: { action: string; data: IFact }[] = [];
-
-const uniqValue = (): keyof IFact => {
-	// 'factId' | 'userId'
-	return 'factId';
-};
-
-dataList.map((item) => {
-	if (item.data[uniqValue()] === 2) {
-		//....
-	}
-	return item;
-});
+// function fn1(_a: string) {
+// 	return 's';
+// }
 //
-// let v: IFact[keyof IFact] = 's'; // number | string
+// function fn2(_a: number, _b: string) {
+// 	return 1;
+// }
 //
-// let v = Object.keys(Animations).map((item: string) => {
-// 	return Animations[item as keyof typeof Animations];
-// });
+// function fn3(_a: number, _b: string, _c: string) {
+// 	return true;
+// }
+//
+// let v1: FunctionParamsReturnType<typeof fn3> = () => 1;
