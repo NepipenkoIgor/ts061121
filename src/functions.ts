@@ -19,26 +19,27 @@
 // 	return `Average is ${avg}`;
 // }
 
-// function isString(arg: number | string): arg is string {
-// 	return typeof arg === 'string';
-// }
-//
-// function average(a: string, b: number): string;
-// function average(a: number, b: string): string;
-// function average(a: number, b: number, c: number): string;
-// function average(...args: (number | string)[]): string {
-// 	let total: number = 0;
-// 	for (const arg of args) {
-// 		//const isString = typeof arg === 'string';
-// 		if (isString(arg)) {
-// 			total += Number(arg);
-// 			continue;
-// 		}
-// 		total += arg;
-// 	}
-// 	const avg: number = total / args.length;
-// 	return `Average is ${avg}`;
-// }
+export function isString(arg: number | string): arg is string {
+	return typeof arg === 'string';
+}
+
+export function average(a: string, b: number): string;
+export function average(a: number, b: string): string;
+export function average(a: number, b: number, c: number): string;
+export function average(...args: (number | string)[]): string {
+	let total: number = 0;
+	for (const arg of args) {
+		//const isString = typeof arg === 'string';
+		if (isString(arg)) {
+			total += Number(arg);
+			continue;
+		}
+		total += arg;
+	}
+	const avg: number = total / args.length;
+	return `Average is ${avg}`;
+}
+
 //
 // average(1);
 // average(1, 2);
@@ -70,16 +71,16 @@
 // test(true).value();
 // test(false);
 
-function getFullName(this: { name: string; age: number }) {
-	return `${this.name}`;
-}
-
-let account = {
-	name: 'Ihor',
-	age: 35,
-	getFullName,
-};
-
-account.getFullName();
-
-document.addEventListener<'click'>('click', this.getFullName.bind(account));
+// function getFullName(this: { name: string; age: number }) {
+// 	return `${this.name}`;
+// }
+//
+// let account = {
+// 	name: 'Ihor',
+// 	age: 35,
+// 	getFullName,
+// };
+//
+// account.getFullName();
+//
+// document.addEventListener<'click'>('click', this.getFullName.bind(account));
